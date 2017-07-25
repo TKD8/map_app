@@ -39,6 +39,38 @@ hello
         style: 'mapbox://styles/snapraise/cj5jwzn3n11eo2rme2nk4i7ou' // replace this with your style URL
     });
     // code from the next step will go here
+    map.on('load', function() {
+
+        map.addLayer(
+            <%#= "#{Location.first.convert_to_geojson}" %>
+            {"id": "points",
+            "type": "symbol",
+            "source": {
+            "type": "geojson",
+                "data": {
+                "type": "FeatureCollection",
+                    "features": <%= "#{[{
+         "type": "Feature",
+         "geometry": {
+             "type": "Point",
+             "coordinates": [-77.03238901390978, 38.913188059745586]
+         },
+         "properties": {
+             "title": "Mapbox DC",
+             "icon": "monument"
+         }
+     }].to_json%>
+            }
+        },
+        "layout": {
+            "icon-image": "{icon}-15",
+                "text-field": "{title}",
+                "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                "text-offset": [0, 0.6],
+                "text-anchor": "top"
+        }
+    });
+    });
 </script>
 </body>
 </html>
